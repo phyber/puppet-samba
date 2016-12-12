@@ -2,25 +2,42 @@
 #
 class samba::server::params {
   case $::osfamily {
-    'Redhat': { $service_name = 'smb' }
+    'Redhat': {
+      $service_name = 'smb'
+      $package_name = 'samba'
+    }
     'Debian': {
       case $::operatingsystem {
         'Debian': {
           case $::operatingsystemmajrelease {
-            '8' : { $service_name = 'smbd' }
-            default: { $service_name = 'samba' }
+            '8' : {
+              $service_name = 'smbd'
+              $package_name = 'samba'
+            }
+            default: {
+              $service_name = 'samba'
+              $package_name = 'samba'
+            }
           }
         }
         'Ubuntu': {
           $service_name = 'smbd'
+          $package_name = 'samba'
           $nmbd_name = 'nmbd'
         }
-        default: { $service_name = 'samba' }
+        default: {
+          $service_name = 'samba'
+          $package_name = 'samba'
+        }
       }
     }
-    'Gentoo': { $service_name = 'samba' }
+    'Gentoo': {
+      $service_name = 'samba'
+      $package_name = 'samba'
+    }
     'Archlinux': {
       $service_name = 'smbd'
+      $package_name = 'samba'
       $nmbd_name = 'nmbd'
     }
 
@@ -29,9 +46,16 @@ class samba::server::params {
     # adding workaround.
     'Linux': {
       case $::operatingsystem {
-        'Gentoo':  { $service_name = 'samba' }
+        'Gentoo':  {
+          $service_name = 'samba'
+          $package_name = 'samba'
+        }
         default: { fail("${::operatingsystem} is not supported by this module.") }
       }
+    }
+    'FreeBSD': {
+        $service_name = 'samba_server'
+        $package_name = 'net/samba44'
     }
     default: { fail("${::osfamily} is not supported by this module.") }
   }
