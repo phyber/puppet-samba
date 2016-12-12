@@ -5,6 +5,7 @@ class samba::server::params {
     'Redhat': {
       $service_name = 'smb'
       $package_name = 'samba'
+      $config_file  = '/etc/samba/smb.conf'
     }
     'Debian': {
       case $::operatingsystem {
@@ -13,32 +14,38 @@ class samba::server::params {
             '8' : {
               $service_name = 'smbd'
               $package_name = 'samba'
+              $config_file  = '/etc/samba/smb.conf'
             }
             default: {
               $service_name = 'samba'
               $package_name = 'samba'
+              $config_file  = '/etc/samba/smb.conf'
             }
           }
         }
         'Ubuntu': {
           $service_name = 'smbd'
           $package_name = 'samba'
-          $nmbd_name = 'nmbd'
+          $config_file  = '/etc/samba/smb.conf'
+          $nmbd_name    = 'nmbd'
         }
         default: {
           $service_name = 'samba'
           $package_name = 'samba'
+          $config_file  = '/etc/samba/smb.conf'
         }
       }
     }
     'Gentoo': {
       $service_name = 'samba'
       $package_name = 'samba'
+      $config_file  = '/etc/samba/smb.conf'
     }
     'Archlinux': {
       $service_name = 'smbd'
       $package_name = 'samba'
-      $nmbd_name = 'nmbd'
+      $config_file  = '/etc/samba/smb.conf'
+      $nmbd_name    = 'nmbd'
     }
 
     # Currently Gentoo has $::osfamily = "Linux". This should change in
@@ -49,6 +56,7 @@ class samba::server::params {
         'Gentoo':  {
           $service_name = 'samba'
           $package_name = 'samba'
+          $config_file  = '/etc/samba/smb.conf'
         }
         default: { fail("${::operatingsystem} is not supported by this module.") }
       }
@@ -56,6 +64,7 @@ class samba::server::params {
     'FreeBSD': {
         $service_name = 'samba_server'
         $package_name = 'net/samba44'
+        $config_file  = '/usr/local/etc/smb4.conf'
     }
     default: { fail("${::osfamily} is not supported by this module.") }
   }

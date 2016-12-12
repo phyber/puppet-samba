@@ -1,6 +1,7 @@
 # == Class samba::server::config
 #
-class samba::server::config {
+class samba::server::config (
+) inherits ::samba::server::params {
   file { '/etc/samba':
     ensure => directory,
     owner  => 'root',
@@ -8,7 +9,7 @@ class samba::server::config {
     mode   => '0755',
   }
 
-  file { '/etc/samba/smb.conf':
+  file { $::samba::server::params::config_file:
     ensure  => present,
     owner   => 'root',
     group   => 'root',
