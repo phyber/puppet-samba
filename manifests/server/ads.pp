@@ -22,7 +22,7 @@ class samba::server::ads($ensure = present,
   $map_archive                = 'no',
   $map_readonly               = 'no',
   $target_ou                  = 'Nix_Mashine',
-  $perform_join               = true) {
+  $perform_join               = true) inherits ::samba::server::params {
 
   $krb5_user_package = $::osfamily ? {
     'RedHat' => 'krb5-workstation',
@@ -103,9 +103,11 @@ class samba::server::ads($ensure = present,
     changes => $changes
   }
 
+  $script_prefix = $::samba::server::params::script_prefix
+
   file {'verify_active_directory':
     # this script returns 0 if join is intact
-    path    => '/sbin/verify_active_directory',
+    path    => "${script_prefix}/verify_active_directory",
     owner   => root,
     group   => root,
     mode    => '0755',
@@ -118,7 +120,7 @@ class samba::server::ads($ensure = present,
 
   file {'configure_active_directory':
     # this script joins or leaves a domain
-    path    => '/sbin/configure_active_directory',
+    path    => "${script_prefix}/configure_active_directory",
     owner   => root,
     group   => root,
     mode    => '0755',
@@ -134,7 +136,13 @@ class samba::server::ads($ensure = present,
       # join the domain configured in samba.conf
       command => '/sbin/configure_active_directory -j',
       unless  => '/sbin/verify_active_directory',
-      require => [ File['configure_active_directory', 'verify_active_directory'], Service['winbind'] ],
+      require => [
+        File[
+          'configure_active_directory',
+          'verify_active_directory',
+        ]
+        Service['winbind'],
+      ],
     }
   }
 }

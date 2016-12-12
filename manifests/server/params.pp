@@ -3,49 +3,56 @@
 class samba::server::params {
   case $::osfamily {
     'Redhat': {
-      $service_name = 'smb'
-      $package_name = 'samba'
-      $config_file  = '/etc/samba/smb.conf'
+      $service_name  = 'smb'
+      $package_name  = 'samba'
+      $config_file   = '/etc/samba/smb.conf'
+      $script_prefix = '/sbin'
     }
     'Debian': {
       case $::operatingsystem {
         'Debian': {
           case $::operatingsystemmajrelease {
             '8' : {
-              $service_name = 'smbd'
-              $package_name = 'samba'
-              $config_file  = '/etc/samba/smb.conf'
+              $service_name  = 'smbd'
+              $package_name  = 'samba'
+              $config_file   = '/etc/samba/smb.conf'
+              $script_prefix = '/sbin'
             }
             default: {
-              $service_name = 'samba'
-              $package_name = 'samba'
-              $config_file  = '/etc/samba/smb.conf'
+              $service_name  = 'samba'
+              $package_name  = 'samba'
+              $config_file   = '/etc/samba/smb.conf'
+              $script_prefix = '/sbin'
             }
           }
         }
         'Ubuntu': {
-          $service_name = 'smbd'
-          $package_name = 'samba'
-          $config_file  = '/etc/samba/smb.conf'
-          $nmbd_name    = 'nmbd'
+          $service_name  = 'smbd'
+          $package_name  = 'samba'
+          $config_file   = '/etc/samba/smb.conf'
+          $script_prefix = '/sbin'
+          $nmbd_name     = 'nmbd'
         }
         default: {
-          $service_name = 'samba'
-          $package_name = 'samba'
-          $config_file  = '/etc/samba/smb.conf'
+          $service_name  = 'samba'
+          $package_name  = 'samba'
+          $config_file   = '/etc/samba/smb.conf'
+          $script_prefix = '/sbin'
         }
       }
     }
     'Gentoo': {
-      $service_name = 'samba'
-      $package_name = 'samba'
-      $config_file  = '/etc/samba/smb.conf'
+      $service_name  = 'samba'
+      $package_name  = 'samba'
+      $config_file   = '/etc/samba/smb.conf'
+      $script_prefix = '/sbin'
     }
     'Archlinux': {
-      $service_name = 'smbd'
-      $package_name = 'samba'
-      $config_file  = '/etc/samba/smb.conf'
-      $nmbd_name    = 'nmbd'
+      $service_name  = 'smbd'
+      $package_name  = 'samba'
+      $config_file   = '/etc/samba/smb.conf'
+      $script_prefix = '/sbin'
+      $nmbd_name     = 'nmbd'
     }
 
     # Currently Gentoo has $::osfamily = "Linux". This should change in
@@ -54,17 +61,19 @@ class samba::server::params {
     'Linux': {
       case $::operatingsystem {
         'Gentoo':  {
-          $service_name = 'samba'
-          $package_name = 'samba'
-          $config_file  = '/etc/samba/smb.conf'
+          $service_name  = 'samba'
+          $package_name  = 'samba'
+          $config_file   = '/etc/samba/smb.conf'
+          $script_prefix = '/sbin'
         }
         default: { fail("${::operatingsystem} is not supported by this module.") }
       }
     }
     'FreeBSD': {
-        $service_name = 'samba_server'
-        $package_name = 'net/samba44'
-        $config_file  = '/usr/local/etc/smb4.conf'
+        $service_name  = 'samba_server'
+        $package_name  = 'net/samba44'
+        $config_file   = '/usr/local/etc/smb4.conf'
+        $script_prefix = '/usr/local/sbin'
     }
     default: { fail("${::osfamily} is not supported by this module.") }
   }
