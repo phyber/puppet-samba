@@ -8,7 +8,7 @@ class samba::server::config (
     file { '/etc/samba':
       ensure => directory,
       owner  => 'root',
-      group  => 'root',
+      group  => $::samba::server::params::config_group,
       mode   => '0755',
       before => File[$::samba::server::params::config_file],
     }
@@ -17,7 +17,7 @@ class samba::server::config (
   file { $::samba::server::params::config_file:
     ensure  => present,
     owner   => 'root',
-    group   => 'root',
+    group   => $::samba::server::params::config_group,
     mode    => '0644',
     require => Class['samba::server::install'],
     notify  => Class['samba::server::service'],

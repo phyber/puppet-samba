@@ -21,14 +21,14 @@ class samba::server($interfaces = '',
                     $preferred_master = '',
                     $bind_interfaces_only = 'yes',
                     $shares = {},
-                    $users = {}, ) {
+                    $users = {}, ) inherits ::samba::server::params {
 
   include samba::server::install
   include samba::server::config
   include samba::server::service
 
-  $incl    = '/etc/samba/smb.conf'
-  $context = '/files/etc/samba/smb.conf'
+  $incl    = $::samba::server::params::config_file
+  $context = "/files${::samba::server::params::config_file}"
   $target  = 'target[. = "global"]'
 
   augeas { 'global-section':

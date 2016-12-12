@@ -6,6 +6,7 @@ class samba::server::params {
       $service_name  = 'smb'
       $package_name  = 'samba'
       $config_file   = '/etc/samba/smb.conf'
+      $config_group  = 'root'
       $script_prefix = '/sbin'
       $pdbedit       = '/usr/bin/pdbedit'
     }
@@ -17,6 +18,7 @@ class samba::server::params {
               $service_name  = 'smbd'
               $package_name  = 'samba'
               $config_file   = '/etc/samba/smb.conf'
+              $config_group  = 'root'
               $script_prefix = '/sbin'
               $pdbedit       = '/usr/bin/pdbedit'
             }
@@ -24,6 +26,7 @@ class samba::server::params {
               $service_name  = 'samba'
               $package_name  = 'samba'
               $config_file   = '/etc/samba/smb.conf'
+              $config_group  = 'root'
               $script_prefix = '/sbin'
               $pdbedit       = '/usr/bin/pdbedit'
             }
@@ -33,6 +36,7 @@ class samba::server::params {
           $service_name  = 'smbd'
           $package_name  = 'samba'
           $config_file   = '/etc/samba/smb.conf'
+          $config_group  = 'root'
           $script_prefix = '/sbin'
           $pdbedit       = '/usr/bin/pdbedit'
           $nmbd_name     = 'nmbd'
@@ -41,6 +45,7 @@ class samba::server::params {
           $service_name  = 'samba'
           $package_name  = 'samba'
           $config_file   = '/etc/samba/smb.conf'
+          $config_group  = 'root'
           $script_prefix = '/sbin'
           $pdbedit       = '/usr/bin/pdbedit'
         }
@@ -50,6 +55,7 @@ class samba::server::params {
       $service_name  = 'samba'
       $package_name  = 'samba'
       $config_file   = '/etc/samba/smb.conf'
+      $config_group  = 'root'
       $script_prefix = '/sbin'
       $pdbedit       = '/usr/bin/pdbedit'
     }
@@ -57,6 +63,7 @@ class samba::server::params {
       $service_name  = 'smbd'
       $package_name  = 'samba'
       $config_file   = '/etc/samba/smb.conf'
+      $config_group  = 'root'
       $script_prefix = '/sbin'
       $pdbedit       = '/usr/bin/pdbedit'
       $nmbd_name     = 'nmbd'
@@ -71,6 +78,7 @@ class samba::server::params {
           $service_name  = 'samba'
           $package_name  = 'samba'
           $config_file   = '/etc/samba/smb.conf'
+          $config_group  = 'root'
           $script_prefix = '/sbin'
           $pdbedit       = '/usr/bin/pdbedit'
         }
@@ -81,6 +89,7 @@ class samba::server::params {
         $service_name  = 'samba_server'
         $package_name  = 'net/samba44'
         $config_file   = '/usr/local/etc/smb4.conf'
+        $config_group  = 'wheel'
         $script_prefix = '/usr/local/sbin'
         $pdbedit       = '/usr/local/bin/pdbedit'
     }
