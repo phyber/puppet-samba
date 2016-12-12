@@ -7,6 +7,7 @@ class samba::server::params {
       $package_name  = 'samba'
       $config_file   = '/etc/samba/smb.conf'
       $script_prefix = '/sbin'
+      $pdbedit       = '/usr/bin/pdbedit'
     }
     'Debian': {
       case $::operatingsystem {
@@ -17,12 +18,14 @@ class samba::server::params {
               $package_name  = 'samba'
               $config_file   = '/etc/samba/smb.conf'
               $script_prefix = '/sbin'
+              $pdbedit       = '/usr/bin/pdbedit'
             }
             default: {
               $service_name  = 'samba'
               $package_name  = 'samba'
               $config_file   = '/etc/samba/smb.conf'
               $script_prefix = '/sbin'
+              $pdbedit       = '/usr/bin/pdbedit'
             }
           }
         }
@@ -31,6 +34,7 @@ class samba::server::params {
           $package_name  = 'samba'
           $config_file   = '/etc/samba/smb.conf'
           $script_prefix = '/sbin'
+          $pdbedit       = '/usr/bin/pdbedit'
           $nmbd_name     = 'nmbd'
         }
         default: {
@@ -38,6 +42,7 @@ class samba::server::params {
           $package_name  = 'samba'
           $config_file   = '/etc/samba/smb.conf'
           $script_prefix = '/sbin'
+          $pdbedit       = '/usr/bin/pdbedit'
         }
       }
     }
@@ -46,12 +51,14 @@ class samba::server::params {
       $package_name  = 'samba'
       $config_file   = '/etc/samba/smb.conf'
       $script_prefix = '/sbin'
+      $pdbedit       = '/usr/bin/pdbedit'
     }
     'Archlinux': {
       $service_name  = 'smbd'
       $package_name  = 'samba'
       $config_file   = '/etc/samba/smb.conf'
       $script_prefix = '/sbin'
+      $pdbedit       = '/usr/bin/pdbedit'
       $nmbd_name     = 'nmbd'
     }
 
@@ -65,6 +72,7 @@ class samba::server::params {
           $package_name  = 'samba'
           $config_file   = '/etc/samba/smb.conf'
           $script_prefix = '/sbin'
+          $pdbedit       = '/usr/bin/pdbedit'
         }
         default: { fail("${::operatingsystem} is not supported by this module.") }
       }
@@ -74,6 +82,7 @@ class samba::server::params {
         $package_name  = 'net/samba44'
         $config_file   = '/usr/local/etc/smb4.conf'
         $script_prefix = '/usr/local/sbin'
+        $pdbedit       = '/usr/local/bin/pdbedit'
     }
     default: { fail("${::osfamily} is not supported by this module.") }
   }
