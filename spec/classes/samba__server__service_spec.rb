@@ -47,6 +47,11 @@ describe 'samba::server::service' do
     end
   end
 
+  context 'on a FreeBSD OS family' do
+    let(:facts) {{ :osfamily => 'FreeBSD' }}
+    it { should contain_service('samba_server') }
+  end
+
   context 'on an unsupported OS' do
     let(:facts) {{ :osfamily => 'Solaris' }}
     it { should raise_error(/Solaris is not supported by this module./) }
