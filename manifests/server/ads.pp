@@ -39,10 +39,20 @@ class samba::server::ads($ensure = present,
     $winbind_package = 'winbind'
   }
 
-  package {
-    $krb5_user_package: ensure => installed;
-    $winbind_package:   ensure => installed;
-    'expect':           ensure => installed;
+  if $::osfamily == 'FreeBSD' {
+    # krb tools are included in FreeBSD base.
+    # winbind is part of the samba44 package.
+    $packages = 'expect'
+  } else {
+    $packages = [
+        'expect',
+        $winbind_package,
+        $krb5_user_package,
+    ]
+  }
+
+  package { $packages:
+    ensure => installed,
   }
 
   include samba::server::config
@@ -112,7 +122,7 @@ class samba::server::ads($ensure = present,
     group   => root,
     mode    => '0755',
     content => template("${module_name}/verify_active_directory.erb"),
-    require => [ Package[$krb5_user_package, $winbind_package, 'expect'],
+    require => [ Package[$packages],
       Augeas['samba-realm', 'samba-security', 'samba-winbind enum users',
         'samba-winbind enum groups', 'samba-winbind uid', 'samba-winbind gid',
         'samba-winbind use default domain'], Service['winbind'] ],
@@ -125,7 +135,7 @@ class samba::server::ads($ensure = present,
     group   => root,
     mode    => '0755',
     content => template("${module_name}/configure_active_directory.erb"),
-    require => [ Package[$krb5_user_package, $winbind_package, 'expect'],
+    require => [ Package[$packages],
       Augeas['samba-realm', 'samba-security', 'samba-winbind enum users',
         'samba-winbind enum groups', 'samba-winbind uid', 'samba-winbind gid',
         'samba-winbind use default domain'], Service['winbind'] ],
@@ -134,8 +144,8 @@ class samba::server::ads($ensure = present,
   if ($perform_join) {
     exec {'join-active-directory':
       # join the domain configured in samba.conf
-      command => '/sbin/configure_active_directory -j',
-      unless  => '/sbin/verify_active_directory',
+      command => "${script_prefix}/configure_active_directory -j",
+      unless  => "${script_prefix}/verify_active_directory",
       require => [
         File['configure_active_directory'],
         File['verify_active_directory'],
