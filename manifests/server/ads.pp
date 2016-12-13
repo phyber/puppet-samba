@@ -137,10 +137,8 @@ class samba::server::ads($ensure = present,
       command => '/sbin/configure_active_directory -j',
       unless  => '/sbin/verify_active_directory',
       require => [
-        File[
-          'configure_active_directory',
-          'verify_active_directory',
-        ]
+        File['configure_active_directory'],
+        File['verify_active_directory'],
         Service['winbind'],
       ],
     }
