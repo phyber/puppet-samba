@@ -114,7 +114,7 @@ class samba::server::params {
         $service_start  = "service ${service_name} start"
         $service_status = "service ${service_name} status"
         $service_stop   = "service ${service_name} stop"
-        $package_name   = 'net/samba44'
+        $package_name   = 'net/samba46'
         $config_file    = '/usr/local/etc/smb4.conf'
         $config_group   = 'wheel'
         $script_prefix  = '/usr/local/sbin'
